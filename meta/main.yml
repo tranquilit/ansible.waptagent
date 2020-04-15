@@ -18,9 +18,6 @@ galaxy_info:
         - xenial
         - bionic
   galaxy_tags:
-    - deployment
-    - system
-  galaxy_tags:
     - system
     - security
 dependencies: []
