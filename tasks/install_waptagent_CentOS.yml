@@ -1,0 +1,49 @@
+---
+- name: remove old wapt sources.list
+  file: 
+    path: "{{ centos_wapt_sources_list }}"
+    state: absent
+
+- rpm_key:
+    state: present
+    key: "{{ centos_gpg_key }}"
+
+- name: adding tis-wapt repository
+  yum_repository:
+    name: wapt
+    description: WAPT Server Repo
+    file: wapt
+    baseurl: "{{ centos_wapt_source }}"
+    gpgcheck: no
+    enabled: yes
+
+- name: yum update
+  yum:
+    name: '*'
+    state: latest
+
+- name: "install tis-waptagent {{wapt_version}} packages"
+  yum:
+    name:
+    - tis-waptagent
+    state: latest
+
+- name: "configuring WAPT agent wapt-get.ini"
+  template:
+    src: "{{ role_path }}/files/wapt-get.ini.j2"
+    dest: "{{ waptagent_config_ini }}"
+    
+- name: "configuring WAPT agent certificates"
+  copy:
+    src: "{{ role_path }}/files/{{ wapt_crt }}"
+    dest: "{{ waptagent_config_crt }}"
+
+- name: enable WAPT agent service
+  service: name={{item}} enabled=yes
+  with_items:
+      - waptservice
+
+- name: start WAPT agent service
+  service: name={{item}} state=started
+  with_items:
+      - waptservice

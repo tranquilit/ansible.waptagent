@@ -1,0 +1,14 @@
+---
+- name: yum update
+  yum:
+    name: '*'
+    state: latest
+
+- name: install waptagent dependencies
+  yum: 
+    name:
+    - epel-release
+    - wget
+    - sudo
+    - htop
+    state: latest

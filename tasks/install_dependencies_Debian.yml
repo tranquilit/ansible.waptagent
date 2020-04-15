@@ -1,0 +1,30 @@
+---
+- name: apt-get update
+  apt:
+    update_cache: yes
+
+- name: apt-get upgrade
+  apt:
+    name: "*"
+    state: latest
+  environment:
+    DEBIAN_FRONTEND: noninteractive
+
+- name: install waptagent dependencies
+  apt: 
+    pkg:
+    - apt-transport-https      
+    - dirmngr
+    - dialog
+    - python-tz
+    - sudo
+    - python-psutil
+    - krb5-user
+    - msktutil
+    - python-pyparsing
+    - lsb-release
+    - htop
+    state: latest
+    update_cache: yes
+  environment:
+    DEBIAN_FRONTEND: noninteractive

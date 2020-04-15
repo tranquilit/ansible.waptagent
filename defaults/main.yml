@@ -1,0 +1,17 @@
+---
+## WAPT agent vars
+wapt_version: "1.8"
+centos_version: "centos7"
+debian_wapt_source: "https://wapt.tranquil.it/debian/wapt-{{ wapt_version }}/"
+centos_wapt_source: "https://wapt.tranquil.it/{{ centos_version }}/wapt-{{ wapt_version }}/"
+debian_wapt_sources_list: "/etc/apt/sources.list.d/wapt.list"
+centos_wapt_sources_list: "/etc/yum.repos.d/wapt.repo"
+debian_gpg_key: "https://wapt.tranquil.it/repositories/tiswapt-pub.gpg"
+centos_gpg_key: "https://wapt.tranquil.it/{{ centos_version }}/RPM-GPG-KEY-TISWAPT-7"
+
+## wapt-get.ini vars
+wapt_server_url: "https://wapt.domain.lan"
+wapt_repo_url: "{{ wapt_server_url }}/wapt/"
+wapt_crt: "wapt_ca.crt"
+waptagent_config_crt: "/opt/wapt/ssl/{{ wapt_crt }}"
+waptagent_config_ini: "/opt/wapt/wapt-get.ini"

@@ -1,0 +1,26 @@
+galaxy_info:
+  role_name: waptagent
+  author: tranquilit
+  description: WAPT Agent install for Debian/CentOS
+  company: Tranquil IT
+  license: GPLv2
+  min_ansible_version: 2.8
+  platforms:
+    - name: EL
+      versions:
+        - 7
+    - name: Debian
+      versions:
+        - stretch
+        - buster
+    - name: Ubuntu
+      versions:
+        - xenial
+        - bionic
+  galaxy_tags:
+    - deployment
+    - system
+  galaxy_tags:
+    - system
+    - security
+dependencies: []

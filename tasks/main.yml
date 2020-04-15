@@ -1,0 +1,19 @@
+---
+#Debian
+- name: Install dependencies
+  include: install_dependencies_Debian.yml
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+- name: Install WAPT Agent for Debian distros
+  include: install_waptagent_Debian.yml
+  when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+
+#CentOS
+
+- name: Install dependencies
+  include: install_dependencies_CentOS.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+- name: Install WAPT Agent for CentOS distros
+  include: install_waptagent_CentOS.yml
+  when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'

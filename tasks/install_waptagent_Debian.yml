@@ -1,0 +1,50 @@
+---
+- name: remove old wapt sources.list
+  file: 
+    path: "{{ debian_wapt_sources_list }}"
+    state: absent
+
+- name: flush apt cache
+  shell: "rm -rf /var/lib/apt/lists/*"
+  args:
+    warn: false
+
+- name: apt clean
+  apt:
+    autoclean: yes
+
+- name: adding gpg key for wapt repo
+  apt_key:
+    url: "{{ debian_gpg_key }}"
+
+- name: "adding tis-wapt repository for WAPT {{ wapt_version }}"
+  apt_repository: 
+    repo: "deb {{ debian_wapt_source }} {{ansible_distribution_release}} main"
+    state: present
+    filename: '{{debian_wapt_sources_list}}'
+
+- name: apt-get update
+  apt:
+    update_cache: yes
+
+- name: "install tis-waptagent {{wapt_version}} packages"
+  apt: 
+    pkg:
+    - tis-waptagent
+    state: latest
+    update_cache: yes
+
+- name: "configuring WAPT agent wapt-get.ini"
+  template:
+    src: "{{ role_path }}/files/wapt-get.ini.j2"
+    dest: "{{ waptagent_config_ini }}"
+    
+- name: "configuring WAPT agent certificates"
+  copy:
+    src: "{{ role_path }}/files/{{ wapt_crt }}"
+    dest: "{{ waptagent_config_crt }}"
+
+- name: restart WAPT agent service
+  service: name={{item}} state=restarted
+  with_items:
+      - waptservice
