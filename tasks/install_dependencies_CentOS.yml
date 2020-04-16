@@ -5,10 +5,10 @@
     state: latest
 
 - name: install waptagent dependencies
-  yum: 
+  yum:
     name:
-    - epel-release
-    - wget
-    - sudo
-    - htop
-    state: latest
+      - epel-release
+      - wget
+      - sudo
+      - htop
+    state: present
